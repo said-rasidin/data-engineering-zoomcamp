@@ -58,10 +58,19 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+<<<<<<< HEAD
     #GOOGLE_APPLICATION_CREDENTIALS: /.google/credentials/google_credentials.json
     #AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/google_credentials.json'
     #GCP_PROJECT_ID: 'data-engineer-339410'
     #GCP_GCS_BUCKET: "dtc_data_lake_data-engineer-339410"
+=======
+    GOOGLE_APPLICATION_CREDENTIALS: /.google/credentials/google_credentials.json
+    AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/google_credentials.json'
+
+    # TODO: Please change GCP_PROJECT_ID & GCP_GCS_BUCKET, as per your config
+    GCP_PROJECT_ID: 'pivotal-surfer-336713'
+    GCP_GCS_BUCKET: 'dtc_data_lake_pivotal-surfer-336713'
+>>>>>>> 1c03cd3205f55186640c74d430f62d2b8b982c93
 
   volumes:
     - ./dags:/opt/airflow/dags

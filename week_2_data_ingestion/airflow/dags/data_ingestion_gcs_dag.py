@@ -82,7 +82,11 @@ with DAG(
 
     download_dataset_task = BashOperator(
         task_id="download_dataset_task",
+<<<<<<< HEAD
         bash_command=f"curl -sSLf {dataset_url} > {path_to_local_home}/{dataset_file}"
+=======
+        bash_command=f"curl -sSL {dataset_url} > {path_to_local_home}/{dataset_file}"
+>>>>>>> 1c03cd3205f55186640c74d430f62d2b8b982c93
     )
 
     format_to_parquet_task = PythonOperator(
