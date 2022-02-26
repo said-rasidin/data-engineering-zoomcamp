@@ -16,18 +16,9 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'trips_data_all')
 
-# dataset_file = "yellow_tripdata_2021-01.csv"
-# dataset_url = f"https://s3.amazonaws.com/nyc-tlc/trip+data/{dataset_file}"
-# path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
-# parquet_file = dataset_file.replace('.csv', '.parquet')
-
-
 #dataset_url
-dataset_file = 'green_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
-URL_PREFIX = 'https://s3.amazonaws.com/nyc-tlc/trip+data' 
-dataset_url = URL_PREFIX + '/' + dataset_file
-# OUTPUT_FILE_TEMPLATE = AIRFLOW_HOME + '/output_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
-# TABLE_NAME_TEMPLATE = 'yellow_taxi_{{ execution_date.strftime(\'%Y_%m\') }}'
+dataset_file = 'taxi+_zone_lookup.csv'
+dataset_url = "https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv"
 path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 parquet_file = dataset_file.replace('.csv', '.parquet')
 
@@ -64,15 +55,14 @@ def upload_to_gcs(bucket, object_name, local_file):
 
 default_args = {
     "owner": "airflow",
-    "start_date": datetime(2019, 1, 1),
-    "end_date":datetime(2020,12,31),
+    "start_date": days_ago(2),
     "depends_on_past": False,
     "retries": 1,
 }
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-    dag_id="data_ingestion_gcs_dag_ny_taxi_green",
+    dag_id="data_ingestion_gcs_dag_zone",
     schedule_interval="0 6 2 * *",
     default_args=default_args,
     catchup=True,

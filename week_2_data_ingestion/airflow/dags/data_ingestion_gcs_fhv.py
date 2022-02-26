@@ -23,7 +23,7 @@ BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'trips_data_all')
 
 
 #dataset_url
-dataset_file = 'green_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
+dataset_file = 'fhv_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
 URL_PREFIX = 'https://s3.amazonaws.com/nyc-tlc/trip+data' 
 dataset_url = URL_PREFIX + '/' + dataset_file
 # OUTPUT_FILE_TEMPLATE = AIRFLOW_HOME + '/output_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
@@ -65,14 +65,14 @@ def upload_to_gcs(bucket, object_name, local_file):
 default_args = {
     "owner": "airflow",
     "start_date": datetime(2019, 1, 1),
-    "end_date":datetime(2020,12,31),
+    "end_date" : datetime(2019, 12, 3),
     "depends_on_past": False,
     "retries": 1,
 }
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-    dag_id="data_ingestion_gcs_dag_ny_taxi_green",
+    dag_id="data_ingestion_gcs_dag_fhv",
     schedule_interval="0 6 2 * *",
     default_args=default_args,
     catchup=True,
