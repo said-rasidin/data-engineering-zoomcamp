@@ -23,7 +23,7 @@ BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'trips_data_all')
 
 
 #dataset_url
-dataset_file = 'green_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
+dataset_file = 'yellow_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
 URL_PREFIX = 'https://s3.amazonaws.com/nyc-tlc/trip+data' 
 dataset_url = URL_PREFIX + '/' + dataset_file
 # OUTPUT_FILE_TEMPLATE = AIRFLOW_HOME + '/output_{{ execution_date.strftime(\'%Y-%m\') }}.csv'
@@ -65,14 +65,13 @@ def upload_to_gcs(bucket, object_name, local_file):
 default_args = {
     "owner": "airflow",
     "start_date": datetime(2019, 1, 1),
-    "end_date":datetime(2020,12,31),
     "depends_on_past": False,
     "retries": 1,
 }
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-    dag_id="data_ingestion_gcs_dag_ny_taxi_green",
+    dag_id="data_ingestion_gcs_dag_ny_taxi_v02",
     schedule_interval="0 6 2 * *",
     default_args=default_args,
     catchup=True,
@@ -82,11 +81,7 @@ with DAG(
 
     download_dataset_task = BashOperator(
         task_id="download_dataset_task",
-<<<<<<< HEAD
         bash_command=f"curl -sSLf {dataset_url} > {path_to_local_home}/{dataset_file}"
-=======
-        bash_command=f"curl -sSL {dataset_url} > {path_to_local_home}/{dataset_file}"
->>>>>>> 1c03cd3205f55186640c74d430f62d2b8b982c93
     )
 
     format_to_parquet_task = PythonOperator(
