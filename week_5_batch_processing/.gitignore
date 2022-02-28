@@ -1,0 +1,6 @@
+data/
+fhvhv/
+zones/
+spark-warehouse/
+.ipynb_checkpoints
+*.csv
